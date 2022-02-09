@@ -16,9 +16,17 @@ TableView {
     implicitWidth: 640
     implicitHeight: 200
 
-    // https://stackoverflow.com/questions/57928843/qml-tableview-with-dynamic-width-columns
-    property var columnWidths: [120, 200, 150, 120]
-    columnWidthProvider: function(column) { return columnWidths[column] }
+    data: Api.refreshData();
+
+    Timer {
+        id: timer
+        interval: 3600000
+        running: true
+        repeat: true
+        onTriggered: {
+            root.data = Api.refreshData();
+        }
+    }
 
     model: TableModel {
         id: closuresTable
@@ -29,8 +37,12 @@ TableView {
         TableModelColumn { display: "Status" }
 
 
-        rows: Api.getClosures()
+        rows: []
     }
+
+    // https://stackoverflow.com/questions/57928843/qml-tableview-with-dynamic-width-columns
+    property var columnWidths: [120, 200, 150, 120]
+    columnWidthProvider: function(column) { return columnWidths[column] }
 
     delegate: Rectangle {
         implicitWidth: columnWidthProvider(column)
@@ -41,6 +53,7 @@ TableView {
         Text {
             text: display
             anchors.centerIn: parent
+            wrapMode: Text.Wrap
         }
     }
 }

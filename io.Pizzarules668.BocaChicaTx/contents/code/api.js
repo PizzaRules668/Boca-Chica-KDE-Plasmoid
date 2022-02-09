@@ -9,7 +9,7 @@ function getClosures() {
 
     closures.onerror = function()
     {
-        console.log("[BocaChicaTx] Error getting closures")
+        console.log("[BocaChicaTx] Error getting closures");
     }
 
     closures.onreadystatechange = function ()
@@ -18,7 +18,7 @@ function getClosures() {
         {
             if (closures.status === 200)
             {
-                closuresTable.clear()
+                closuresTable.clear();
                 closuresTable.appendRow({
                     Type: "Closure Type",
                     Date: "Closure Date",
@@ -36,9 +36,11 @@ function getClosures() {
                             Date: closuresData[i]["Date"],
                             Time: closuresData[i]["Time"],
                             Status: closuresData[i]["Status"]
-                        })
+                        });
                     }
                 }
+
+                console.log("[BocaChicaTx] Closures refreshed");
             }
         }
     }
@@ -53,4 +55,9 @@ function getClosures() {
             Status: "Closure Status"
         }
     ]
+}
+
+function refreshData()
+{
+    getClosures();
 }
