@@ -35,7 +35,7 @@ function getClosures() {
                             Type: closuresData[i]["Type"],
                             Date: closuresData[i]["Date"],
                             Time: closuresData[i]["Time"],
-                            Status: closuresData[i]["Status"]
+                            Status: closuresData[i]["Status"].replace("Intermittent ", "      Intermittent\n")
                         });
                     }
                 }

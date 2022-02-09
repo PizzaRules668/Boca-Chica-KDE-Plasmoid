@@ -9,12 +9,12 @@ import "../code/api.js" as Api
 
 TableView {
     id: root
-    columnSpacing: 1
+    columnSpacing: .5
     rowSpacing: 1
     clip: true
 
     implicitWidth: 640
-    implicitHeight: 200
+    implicitHeight: 250
 
     data: Api.refreshData();
 
@@ -47,13 +47,13 @@ TableView {
     delegate: Rectangle {
         implicitWidth: columnWidthProvider(column)
         implicitHeight: 30
-        border.width: .5
+        border.width: 1
         color: "#bab9b1"
 
         Text {
             text: display
             anchors.centerIn: parent
-            wrapMode: Text.Wrap
+            //wrapMode: Text.Wrap
         }
     }
 }
