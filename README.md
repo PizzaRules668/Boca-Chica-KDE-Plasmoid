@@ -18,3 +18,7 @@ Download the code.
 Then open the downloaded the code in a terminal
 
 ```kpackagetool5 -t Plasma/Applet --upgrade io.Pizzarules668.BocaChicaTx```
+
+## Screenshots
+
+![Road Closures](./images/Screenshot1.png)
