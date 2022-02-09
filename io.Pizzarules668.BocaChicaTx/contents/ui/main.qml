@@ -7,53 +7,142 @@ import "../code/api.js" as Api
 // Create Plasmoid 
 // https://techbase.kde.org/Development/Tutorials/Plasma5/QML2/GettingStarted
 
-TableView {
+Item {
     id: root
-    columnSpacing: .5
-    rowSpacing: 1
-    clip: true
 
-    implicitWidth: 640
-    implicitHeight: 250
+    width: 640
+    height: 350
 
-    data: Api.refreshData();
+    Rectangle {
+        id: closuresHeader
+        width: 90
+        height: 20
 
-    Timer {
-        id: timer
-        interval: 3600000
-        running: true
-        repeat: true
-        onTriggered: {
-            root.data = Api.refreshData();
+        x: (parent.width - closuresHeader.width)/2
+
+        color: "#bab9b1"
+
+        Text {            
+            id: closuresHeaderText
+            text: "Road Closures"
+            anchors.centerIn: parent
+            anchors.fill: parent
         }
     }
 
-    model: TableModel {
+    TableView {
         id: closuresTable
+        width: 640
+        height: 250
 
-        TableModelColumn { display: "Type" }
-        TableModelColumn { display: "Date" }
-        TableModelColumn { display: "Time" }
-        TableModelColumn { display: "Status" }
+        y: 20
 
+        columnSpacing: .5
+        rowSpacing: 1
 
-        rows: []
+        data: Api.getClosures();
+        Timer {
+            id: closureTimer
+            interval: 3600000
+            running: true
+            repeat: true
+            onTriggered: {
+                Api.getClosures();
+            }
+        }
+
+        model: TableModel {
+            id: closuresTableModel
+
+            TableModelColumn { display: "Type" }
+            TableModelColumn { display: "Date" }
+            TableModelColumn { display: "Time" }
+            TableModelColumn { display: "Status" }
+
+            rows: []
+        }
+
+        // https://stackoverflow.com/questions/57928843/qml-tableview-with-dynamic-width-columns
+        property var columnWidths: [120, 200, 150, 120]
+        columnWidthProvider: function(column) { return columnWidths[column] }
+
+        delegate: Rectangle {
+            width: closuresTable.columnWidthProvider(column)
+            height: 30
+            border.width: 1
+            color: "#bab9b1"
+
+            Text {
+                text: display
+                anchors.centerIn: parent
+            }
+        }
     }
 
-    // https://stackoverflow.com/questions/57928843/qml-tableview-with-dynamic-width-columns
-    property var columnWidths: [120, 200, 150, 120]
-    columnWidthProvider: function(column) { return columnWidths[column] }
+    Rectangle {
+        id: tfrHeader
+        width: 85
+        height: 20
 
-    delegate: Rectangle {
-        implicitWidth: columnWidthProvider(column)
-        implicitHeight: 30
-        border.width: 1
+        y: closuresTable.height + closuresTable.y
+        x: (parent.width - tfrHeaderText.width)/2
+
         color: "#bab9b1"
 
-        Text {
-            text: display
+        Text {            
+            id: tfrHeaderText
+            text: "TFRs Closures"
             anchors.centerIn: parent
-            //wrapMode: Text.Wrap
+            anchors.fill: parent
+        }
+    }
+
+    TableView {
+        id: tfrTable
+        width: 640
+        height: 100
+
+        y: closuresTable.height + closuresTable.y + 20
+
+        columnSpacing: .5
+        rowSpacing: 1
+
+        data: Api.getTFR();
+        Timer {
+            id: tfrTime
+            interval: 3600000
+            running: true
+            repeat: true
+            onTriggered: {
+                Api.getTFR();
+            }
+        }
+
+        model: TableModel {
+            id: tfrTableModel
+
+            TableModelColumn { display: "NotamID" }
+            TableModelColumn { display: "EffectiveStart" }
+            TableModelColumn { display: "EffectiveEnd" }
+            TableModelColumn { display: "Altitude" }
+
+            rows: []
+        }
+
+        // https://stackoverflow.com/questions/57928843/qml-tableview-with-dynamic-width-columns
+        property var columnWidths: [120, 200, 150, 120]
+        columnWidthProvider: function(column) { return columnWidths[column] }
+
+        delegate: Rectangle {
+            width: tfrTable.columnWidthProvider(column)
+            height: 30
+            border.width: 1
+            color: "#bab9b1"
+
+            Text {
+                text: display
+                anchors.centerIn: parent
+            }
         }
     }
 }
