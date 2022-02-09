@@ -1,2 +1,6 @@
-# Boca-Chica-KDE-Plasmoid
-This Plasmoid is used to display the lastest Boca Chica Highway 4 Road Closures, Boca Chica TFR, and Boca Chica Weather
+# Boca Chica Plasmoid
+
+This is a KDE Plasmiod that is used to display the most recent Highway 4 Road closures.
+
+And will soon display TFR's
+
