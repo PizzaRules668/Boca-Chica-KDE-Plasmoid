@@ -11,7 +11,7 @@ Item {
     id: root
 
     width: 640
-    height: 350
+    height: 380
 
     Rectangle {
         id: closuresHeader
@@ -33,7 +33,7 @@ Item {
     TableView {
         id: closuresTable
         width: 640
-        height: 250
+        height: 200
 
         y: 20
 
@@ -68,7 +68,7 @@ Item {
 
         delegate: Rectangle {
             width: closuresTable.columnWidthProvider(column)
-            height: 30
+            height: 20
             border.width: 1
             color: "#bab9b1"
 
@@ -100,7 +100,7 @@ Item {
     TableView {
         id: tfrTable
         width: 640
-        height: 100
+        height: 60
 
         y: closuresTable.height + closuresTable.y + 20
 
