@@ -86,7 +86,7 @@ function getTFR() {
                             NotamID: tfrData[i]["notam"],
                             EffectiveStart: tfrData[i]["date"].split(" To ")[0],
                             EffectiveEnd: tfrData[i]["date"].split(" To ")[1],
-                            Altitude: tfrData[i]["altitude"]
+                            Altitude: tfrData[i]["altitude"].match(/.{1,26}/g).join("\n")
                         });
                     }
                 }

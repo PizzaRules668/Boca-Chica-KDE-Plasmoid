@@ -130,7 +130,7 @@ Item {
         }
 
         // https://stackoverflow.com/questions/57928843/qml-tableview-with-dynamic-width-columns
-        property var columnWidths: [120, 200, 150, 120]
+        property var columnWidths: [120, 120, 120, 230]
         columnWidthProvider: function(column) { return columnWidths[column] }
 
         delegate: Rectangle {
