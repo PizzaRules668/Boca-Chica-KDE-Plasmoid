@@ -3,16 +3,14 @@ var CLOSURES_API_URL = BASE_API_URL + "/road"
 var TFR_API_URL = BASE_API_URL + "/tfr"
 
 
-function passed(start, end)
+function passed( end)
 {
-    var now = new Date().getTime();
+    var now = parseInt(new Date().getTime().toString().slice(0, -3));
 
-    if (now < start)
-        return false;
-    else if (now > end)
-        return false;
+    if (now > end)
+        return true;
 
-    return true;
+    return false;
 }
 
 function getClosures() {
@@ -45,13 +43,13 @@ function getClosures() {
                 {
                     for (var i=0; i < closuresData.length; i++)
                     {
-                        //if (!passed(closuresData[i]["Start"], closuresData[i]["End"]))
-                        closuresTableModel.appendRow({
-                            Type: closuresData[i]["Type"],
-                            Date: closuresData[i]["Date"],
-                            Time: closuresData[i]["Time"],
-                            Status: closuresData[i]["Status"].replace("Intermittent ", "      Intermittent\n").replace(" / ", "\n").replace(".", "\n")
-                        });
+                        if (!passed(closuresData[i]["End"]))
+                            closuresTableModel.appendRow({
+                                Type: closuresData[i]["Type"],
+                                Date: closuresData[i]["Date"],
+                                Time: closuresData[i]["Time"],
+                                Status: closuresData[i]["Status"].replace("Intermittent ", "      Intermittent\n").replace(" / ", "\n").replace(".", "\n")
+                            });
                     }
                 }
 
