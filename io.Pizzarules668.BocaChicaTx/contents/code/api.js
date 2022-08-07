@@ -2,6 +2,19 @@ var BASE_API_URL = "https://spacex-boca-chica-api.pizzarules668.repl.co/"
 var CLOSURES_API_URL = BASE_API_URL + "/road"
 var TFR_API_URL = BASE_API_URL + "/tfr"
 
+
+function passed(start, end)
+{
+    var now = new Date().getTime();
+
+    if (now < start)
+        return false;
+    else if (now > end)
+        return false;
+
+    return true;
+}
+
 function getClosures() {
     var closures = new XMLHttpRequest();
     var closuresData;
@@ -26,17 +39,18 @@ function getClosures() {
                     Time: "Closure Time",
                     Status: "Closure Status"
                 })
-                
+
                 closuresData = JSON.parse(closures.responseText);
                 if (closuresData.length > 0)
                 {
                     for (var i=0; i < closuresData.length; i++)
                     {
+                        //if (!passed(closuresData[i]["Start"], closuresData[i]["End"]))
                         closuresTableModel.appendRow({
                             Type: closuresData[i]["Type"],
                             Date: closuresData[i]["Date"],
                             Time: closuresData[i]["Time"],
-                            Status: closuresData[i]["Status"].replace("Intermittent ", "      Intermittent\n").replace(" / ", "\n")
+                            Status: closuresData[i]["Status"].replace("Intermittent ", "      Intermittent\n").replace(" / ", "\n").replace(".", "\n")
                         });
                     }
                 }
@@ -76,17 +90,22 @@ function getTFR() {
                     EffectiveEnd: "Effective End",
                     Altitude: "Altitude"
                 })
-                
+
                 tfrData = JSON.parse(tfrs.responseText);
                 if (tfrData.length > 0)
                 {
                     for (var i=0; i < tfrData.length; i++)
                     {
+                        var notamId = tfrData[i]["Notam"]
+                        var start = tfrData[i]["Date"].split(" To ")[0]
+                        var end = tfrData[i]["Date"].split(" To ")[1]
+                        var alt = tfrData[i]["Altitude"].match(/.{1,26}/g).join("\n")
+
                         tfrTableModel.appendRow({
-                            NotamID: tfrData[i]["notam"],
-                            EffectiveStart: tfrData[i]["date"].split(" To ")[0],
-                            EffectiveEnd: tfrData[i]["date"].split(" To ")[1],
-                            Altitude: tfrData[i]["altitude"].match(/.{1,26}/g).join("\n")
+                            NotamID: notamId,
+                            EffectiveStart: start,
+                            EffectiveEnd: end,
+                            Altitude: alt
                         });
                     }
                 }
