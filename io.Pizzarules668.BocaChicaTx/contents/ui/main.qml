@@ -102,7 +102,7 @@ Item {
         width: 640
         height: 60
 
-        y: closuresTable.height + closuresTable.y + 20
+        y: tfrHeader.height + tfrHeader.y
 
         columnSpacing: .5
         rowSpacing: 1

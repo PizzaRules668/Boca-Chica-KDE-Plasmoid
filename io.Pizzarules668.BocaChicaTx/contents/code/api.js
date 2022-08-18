@@ -44,12 +44,13 @@ function getClosures() {
                     for (var i=0; i < closuresData.length; i++)
                     {
                         if (!passed(closuresData[i]["End"]))
-                            closuresTableModel.appendRow({
-                                Type: closuresData[i]["Type"],
-                                Date: closuresData[i]["Date"],
-                                Time: closuresData[i]["Time"],
-                                Status: closuresData[i]["Status"].replace("Intermittent ", "      Intermittent\n").replace(" / ", "\n").replace(".", "\n")
-                            });
+                            if (!closuresData[i]["Status"].includes("Closure Canceled"))
+                                closuresTableModel.appendRow({
+                                    Type: closuresData[i]["Type"],
+                                    Date: closuresData[i]["Date"],
+                                    Time: closuresData[i]["Time"],
+                                    Status: closuresData[i]["Status"].replace("Intermittent ", "      Intermittent\n").replace(" / ", "\n").replace(".", "\n")
+                                });
                     }
                 }
 
