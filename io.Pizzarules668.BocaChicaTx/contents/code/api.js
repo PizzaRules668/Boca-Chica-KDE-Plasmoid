@@ -96,9 +96,11 @@ function getTFR() {
                     for (var i=0; i < tfrData.length; i++)
                     {
                         var notamId = tfrData[i]["Notam"]
-                        var start = tfrData[i]["Date"].split(" To ")[0]
-                        var end = tfrData[i]["Date"].split(" To ")[1]
-                        var alt = tfrData[i]["Altitude"].match(/.{1,26}/g).join("\n")
+                        var start   = tfrData[i]["Effective"].split(" to ")[0].split(" at ")[0]
+                        console.log(start);
+                        var end     = tfrData[i]["Effective"].split(" to ")[1].split(" at ")[0]
+                        console.log(end);
+                        var alt     = tfrData[i]["Altitude"].match(/.{1,26}/g).join("\n")
 
                         tfrTableModel.appendRow({
                             NotamID: notamId,
